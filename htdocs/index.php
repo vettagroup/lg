@@ -308,6 +308,7 @@ if (isset($_CONFIG['routers'][$router]) AND
 	isset($queries[$_CONFIG['routers'][$router]['os']][$protocol]) AND
 	(isset($queries[$_CONFIG['routers'][$router]['os']][$protocol][$command]) OR $command == 'graph'))
 {
+	echo "Your public IP might be " . $_SERVER['REMOTE_ADDR'];
 	if($_CONFIG['showpeerinfo'] == "FALSE" OR $_CONFIG['routers'][$router]['showpeerinfo'] == "FALSE"){
 		switch ($command){
 			case "summary": {
