@@ -309,9 +309,9 @@ if (isset($_CONFIG['routers'][$router]) AND
 	isset($queries[$_CONFIG['routers'][$router]['os']][$protocol]) AND
 	(isset($queries[$_CONFIG['routers'][$router]['os']][$protocol][$command]) OR $command == 'graph'))
 {
-	if(isset($_CONFIG['safesubnet']) AND ! empty($_CONFIG['safecidr']))
+	if(isset($_CONFIG['safesubnet']) AND ! empty($_CONFIG['safesubnet']))
 	{
-		echo "Your public IP might be " . $_SERVER['REMOTE_ADDR'] . ", and check returns " . strval(checkIP($_SERVER['REMOTE_ADDR'], $_CONFIG['safecidr']));
+		echo "Your public IP might be " . $_SERVER['REMOTE_ADDR'] . ", and check returns " . strval(checkIP($_SERVER['REMOTE_ADDR'], $_CONFIG['safesubnet']));
 	}
 	if($_CONFIG['showpeerinfo'] == "FALSE" OR $_CONFIG['routers'][$router]['showpeerinfo'] == "FALSE"){
 		switch ($command)
