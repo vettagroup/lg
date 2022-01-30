@@ -279,11 +279,11 @@ $queries = array
 	),
 );
 
-if(shell_exec('echo lgshellexectest') != 'lgshellexectest'){
+if(trim(shell_exec('echo lgshellexectest')) != 'lgshellexectest'){
 	print '<div class="center"><p class="error">shell_exec not enabled</p></div>';
 	exit;
 }
-if(exec('echo lgshellexectest') != 'lgshellexectest'){
+if(trim(exec('echo lgshellexectest')) != 'lgshellexectest'){
 	print '<div class="center"><p class="error">exec not enabled</p></div>';
 	exit;
 }
