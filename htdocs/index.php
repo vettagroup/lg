@@ -305,25 +305,28 @@ if($popentest != "lgpopentest")
 	exit;
 }
 
+# Check if client IP is within safe subnets
+
+$ipsafe = false;
+if(isset($_CONFIG['safesubnets']) AND ! empty($_CONFIG['safesubnets']))
+{
+	foreach($_CONFIG['safesubnets'] as $safesubnet)
+	{
+		if(! empty($safesubnet))
+		{
+			if(checkIP($_SERVER['REMOTE_ADDR'], $safesubnet))
+			{
+				$ipsafe = true;
+			}
+		}
+	}
+}
+
 if (isset($_CONFIG['routers'][$router]) AND 
 	isset($queries[$_CONFIG['routers'][$router]['os']][$protocol]) AND
 	(isset($queries[$_CONFIG['routers'][$router]['os']][$protocol][$command]) OR $command == 'graph'))
 {
-	$ipsafe = false;
-	if(isset($_CONFIG['safesubnets']) AND ! empty($_CONFIG['safesubnets']))
-	{
-		foreach($_CONFIG['safesubnets'] as $safesubnet)
-		{
-			if(! empty($safesubnet))
-			{
-				if(checkIP($_SERVER['REMOTE_ADDR'], $safesubnet))
-				{
-					$ipsafe = true;
-				}
-			}
-		}
-	}
-	if($ipsafe == true)
+	if($ipsafe)
 	{
 		echo "Your public IP is " . $_SERVER['REMOTE_ADDR'] . " and is within the safe subnet, permitting display of peer information.<br /><br />";
 	}
@@ -573,7 +576,7 @@ else
 					<tr><td><input type="radio" name="command" id="bgp" value="bgp" checked="checked"></td><td><label for="bgp">bgp equal</label></td></tr>
                     <tr><td><input type="radio" name="command" id="bgp-within" value="bgp-within" checked="checked"></td><td><label for="bgp-within">bgp within</label></td></tr>
 					<tr><td><input type="radio" name="command" id="advertised-routes" value="advertised-routes"></td><td><label for="advertised-routes">bgp&nbsp;advertised-routes</label></td></tr>
-					<?php if($_CONFIG['routers'][$router]['showpeerinfo'] == "TRUE" OR ($_CONFIG['showpeerinfo'] == "TRUE" AND !isset($_CONFIG['routers'][$router]['showpeerinfo']))){ ?>
+					<?php if($ipsafe OR ($_CONFIG['routers'][$router]['showpeerinfo'] == "TRUE" OR ($_CONFIG['showpeerinfo'] == "TRUE" AND !isset($_CONFIG['routers'][$router]['showpeerinfo'])))){ ?>
 					<tr><td><input type="radio" name="command" id="summary" value="summary"></td><td><label for="summary">bgp&nbsp;summary</label></td></tr>
 					<?php } ?>
 					<tr><td><input type="radio" name="command" id="graph" value="graph"></td><td><label for="graph">bgp graph</label></td></tr>
