@@ -59,6 +59,7 @@ $_CONFIG = array
 	'company' => 'My Company Name',
 	'logo' => 'lg_logo.gif',
 	'color' => '#E48559',
+	'showpeerinfo' => 'TRUE',
     'sshauthtype' => 'password',
     'sshprivatekeypath' => '',
 	'sshpwdcommand' => 'plink',
@@ -282,6 +283,15 @@ if (isset($_CONFIG['routers'][$router]) AND
 	isset($queries[$_CONFIG['routers'][$router]['os']][$protocol]) AND
 	(isset($queries[$_CONFIG['routers'][$router]['os']][$protocol][$command]) OR $command == 'graph'))
 {
+	if($_CONFIG['showpeerinfo'] == "FALSE" OR $_CONFIG['routers'][$router]['showpeerinfo'] == "FALSE"){
+		switch ($command){
+			case "summary": {
+				print '<div class="center"><p class="error">Summary not permitted.</p></div>';
+				exit;
+				break;
+			}
+		}
+	}
 	if ($protocol == 'ipv6' AND (!isset($_CONFIG['routers'][$router]['ipv6']) OR 
 		$_CONFIG['routers'][$router]['ipv6'] !== TRUE))
 	{
@@ -516,7 +526,9 @@ else
 					<tr><td><input type="radio" name="command" id="bgp" value="bgp" checked="checked"></td><td><label for="bgp">bgp equal</label></td></tr>
                     <tr><td><input type="radio" name="command" id="bgp-within" value="bgp-within" checked="checked"></td><td><label for="bgp-within">bgp within</label></td></tr>
 					<tr><td><input type="radio" name="command" id="advertised-routes" value="advertised-routes"></td><td><label for="advertised-routes">bgp&nbsp;advertised-routes</label></td></tr>
+					<?php if($_CONFIG['routers'][$router]['showpeerinfo'] == "TRUE" OR ($_CONFIG['showpeerinfo'] == "TRUE" AND !isset($_CONFIG['routers'][$router]['showpeerinfo']))){ ?>
 					<tr><td><input type="radio" name="command" id="summary" value="summary"></td><td><label for="summary">bgp&nbsp;summary</label></td></tr>
+					<?php } ?>
 					<tr><td><input type="radio" name="command" id="graph" value="graph"></td><td><label for="graph">bgp graph</label></td></tr>
 					<tr><td><input type="radio" name="command" id="trace" value="trace"></td><td><label for="trace">traceroute</label></td></tr>
 					<tr><td><input type="radio" name="command" id="ping" value="ping"></td><td><label for="ping">ping</label></td></tr>

@@ -25,6 +25,11 @@ $_CONFIG['logo'] = 'lg_logo.gif';
 $_CONFIG['color'] = '#E48559';
 
 /*
+ * Should the LG show BGP peer information?
+ */
+$_CONFIG['showpeerinfo'] = 'TRUE';
+
+/*
  * SSH authentication type (`password` or `privatekey`)
  */
 $_CONFIG['sshauthtype'] = 'password';
@@ -74,6 +79,7 @@ $_CONFIG['aswhois'] = 'http://noc.hsdn.org/aswhois/';
  *      pingtraceurl      - URL address for ping and traceroute tools (or FALSE)
  *      description       - Node description
  *      group             - Node group name (of FALSE)
+ *      showpeerinfo      - Should the LG show peer information? (TRUE / FALSE)
  *      ipv6              - Node supports IPv6 (TRUE/FALSE)
  *      os                - Node OS (ios, mikrotik, quagga, junos)
  */
@@ -85,6 +91,7 @@ $_CONFIG['routers'] = array
 		'pingtraceurl' => FALSE,
 		'description' => 'Example Router 1',
 		'group' => 'AS12345',
+		'showpeerinfo' => TRUE,
 		'ipv6' => TRUE,
 		'os' => 'ios',
 	),
@@ -95,6 +102,7 @@ $_CONFIG['routers'] = array
 		'pingtraceurl' => FALSE,
 		'description' => 'Example Router 2',
 		'group' => 'AS12345',
+		'showpeerinfo' => FALSE,
 		'ipv6' => TRUE,
 		'os' => 'ios',
 	),
@@ -105,6 +113,7 @@ $_CONFIG['routers'] = array
 		'pingtraceurl' => FALSE,
 		'description' => 'Example Router 3',
 		'group' => 'AS12345',
+		'showpeerinfo' => TRUE,
 		'ipv6' => TRUE,
 		'os' => 'mikrotik',
 	),
@@ -116,6 +125,7 @@ $_CONFIG['routers'] = array
 		'pingtraceurl' => FALSE,
 		'description' => 'Example Router 4',
 		'group' => 'AS12345',
+		'showpeerinfo' => FALSE,
 		'ipv6' => TRUE,
 		'os' => 'mikrotik',
 	),
