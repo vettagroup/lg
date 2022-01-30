@@ -283,10 +283,6 @@ if(trim(shell_exec('echo lgshellexectest')) != 'lgshellexectest'){
 	print '<div class="center"><p class="error">shell_exec not enabled</p></div>';
 	exit;
 }
-if(trim(exec('echo lgshellexectest')) != 'lgshellexectest'){
-	print '<div class="center"><p class="error">exec not enabled</p></div>';
-	exit;
-}
 
 if (isset($_CONFIG['routers'][$router]) AND 
 	isset($queries[$_CONFIG['routers'][$router]['os']][$protocol]) AND
@@ -688,8 +684,6 @@ function process($url, $exec, $return_buffer = FALSE)
 			// Get MikroTik additional summary information
 			if (preg_match('/^\/routing bgp peer print status/i', $exec) AND $os == 'mikrotik' AND $return_buffer != TRUE)
 			{
-				var_dump(@shell_exec('echo n | '.$ssh_path.' '.implode(' ', $params).' /routing bgp instance print'));
-				exit;
 				if ($instance = @shell_exec('echo n | '.$ssh_path.' '.implode(' ', $params).' /routing bgp instance print'))
 				{
 					$instance_list = parse_list($instance);
