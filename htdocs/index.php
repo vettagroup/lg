@@ -279,8 +279,26 @@ $queries = array
 	),
 );
 
+# Test shell_exec to make sure it's available and working
 if(trim(shell_exec('echo lgshellexectest')) != 'lgshellexectest'){
 	print '<div class="center"><p class="error">shell_exec not enabled</p></div>';
+	exit;
+}
+
+# Test popen to make sure it's available and working
+$popentest = "";
+$fp = popen('echo lgpopentest','r');
+while(!feof($fp))
+    {
+        // send the current file part to the browser
+        $popentest .= trim(fread($fp, 1024));
+        // flush the content to the browser
+        flush();
+    }
+fclose($fp);
+$popentest = trim($popentest);
+if($popentest != "lgpopentest"){
+	print '<div class="center"><p class="error">popen not working</p></div>';
 	exit;
 }
 
