@@ -280,7 +280,8 @@ $queries = array
 );
 
 # Test shell_exec to make sure it's available and working
-if(trim(shell_exec('echo lgshellexectest')) != 'lgshellexectest'){
+if(trim(shell_exec('echo lgshellexectest')) != 'lgshellexectest')
+{
 	print '<div class="center"><p class="error">shell_exec not enabled</p></div>';
 	exit;
 }
@@ -297,7 +298,8 @@ while(!feof($fp))
     }
 fclose($fp);
 $popentest = trim($popentest);
-if($popentest != "lgpopentest"){
+if($popentest != "lgpopentest")
+{
 	print '<div class="center"><p class="error">popen not working</p></div>';
 	exit;
 }
