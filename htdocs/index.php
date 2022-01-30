@@ -323,7 +323,7 @@ if (isset($_CONFIG['routers'][$router]) AND
 			}
 		}
 	}
-	if($ipsafe)
+	if($ipsafe == true)
 	{
 		echo "Your public IP is " . $_SERVER['REMOTE_ADDR'] . " and is within the safe subnet, permitting display of peer information.";
 	}
