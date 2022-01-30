@@ -32,7 +32,7 @@ $_CONFIG['showpeerinfo'] = 'TRUE';
 /*
  * If 'showpeerinfo' above is TRUE, and you would like to show BGP peer information to visitors from a specific IPv4 address or subnet, enter the IPv4 address or subnet (in CIDR format) below
  */
-$_CONFIG['safesubnet'] = 'TRUE';
+$_CONFIG['safesubnet'] = '';
 
 /*
  * SSH authentication type (`password` or `privatekey`)
