@@ -688,6 +688,8 @@ function process($url, $exec, $return_buffer = FALSE)
 			// Get MikroTik additional summary information
 			if (preg_match('/^\/routing bgp peer print status/i', $exec) AND $os == 'mikrotik' AND $return_buffer != TRUE)
 			{
+				var_dump(@shell_exec('echo n | '.$ssh_path.' '.implode(' ', $params).' /routing bgp instance print'));
+				exit;
 				if ($instance = @shell_exec('echo n | '.$ssh_path.' '.implode(' ', $params).' /routing bgp instance print'))
 				{
 					$instance_list = parse_list($instance);
