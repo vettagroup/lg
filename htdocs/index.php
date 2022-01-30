@@ -2877,7 +2877,7 @@ function checkIP($ip, $cidr)
 {
 	if (strpos($cidr, "/") !== false)
 	{
-		list ($net, $mask) = split ("/", $cidr);
+		list($net, $mask) = explode("/", $cidr);
    
 		$ip_net = ip2long ($net);
 		$ip_mask = ~((1 << (32 - $mask)) - 1);
