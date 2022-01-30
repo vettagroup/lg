@@ -60,6 +60,7 @@ $_CONFIG = array
 	'logo' => 'lg_logo.gif',
 	'color' => '#E48559',
 	'showpeerinfo' => 'TRUE',
+	'safesubnet' => '',
     'sshauthtype' => 'password',
     'sshprivatekeypath' => '',
 	'sshpwdcommand' => 'plink',
@@ -308,10 +309,15 @@ if (isset($_CONFIG['routers'][$router]) AND
 	isset($queries[$_CONFIG['routers'][$router]['os']][$protocol]) AND
 	(isset($queries[$_CONFIG['routers'][$router]['os']][$protocol][$command]) OR $command == 'graph'))
 {
-	echo "Your public IP might be " . $_SERVER['REMOTE_ADDR'];
+	if(isset($_CONFIG['safesubnet']) AND ! empty($_CONFIG['safecidr']))
+	{
+		echo "Your public IP might be " . $_SERVER['REMOTE_ADDR'] . ", and check returns " . strval(checkIP($_SERVER['REMOTE_ADDR'], $_CONFIG['safecidr']));
+	}
 	if($_CONFIG['showpeerinfo'] == "FALSE" OR $_CONFIG['routers'][$router]['showpeerinfo'] == "FALSE"){
-		switch ($command){
-			case "summary": {
+		switch ($command)
+		{
+			case "summary": 
+			{
 				print '<div class="center"><p class="error">Summary not permitted.</p></div>';
 				exit;
 				break;
@@ -2865,6 +2871,31 @@ function group_routers($array)
 	}
 
 	return $return;
+}
+
+function checkIP($ip, $cidr)
+{
+	if (strpos($cidr, "/") !== false)
+	{
+		list ($net, $mask) = split ("/", $cidr);
+   
+		$ip_net = ip2long ($net);
+		$ip_mask = ~((1 << (32 - $mask)) - 1);
+
+		$ip_ip = ip2long ($ip);
+
+		$ip_ip_net = $ip_ip & $ip_mask;
+
+		return ($ip_ip_net == $ip_net);
+	}
+	elseif (filter_var(trim($cidr), FILTER_VALIDATE_IP) == true AND $ip === $cidr)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }
 
 // ------------------------------------------------------------------------
