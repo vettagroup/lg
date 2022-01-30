@@ -310,13 +310,18 @@ if (isset($_CONFIG['routers'][$router]) AND
 	(isset($queries[$_CONFIG['routers'][$router]['os']][$protocol][$command]) OR $command == 'graph'))
 {
 	$ipsafe = false;
-	if(isset($_CONFIG['safesubnet']) AND ! empty($_CONFIG['safesubnet']))
+	if(isset($_CONFIG['safesubnets']) AND ! empty($_CONFIG['safesubnets']))
 	{
-		if(checkIP($_SERVER['REMOTE_ADDR'], $_CONFIG['safesubnet']))
+		foreach($_CONFIG['safesubnets'] as $safesubnet)
 		{
-			$ipsafe = true;
+			if(! empty($safesubnet))
+			{
+				if(checkIP($_SERVER['REMOTE_ADDR'], $safesubnet))
+				{
+					$ipsafe = true;
+				}
+			}
 		}
-		
 	}
 	if($ipsafe)
 	{

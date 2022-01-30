@@ -30,9 +30,11 @@ $_CONFIG['color'] = '#E48559';
 $_CONFIG['showpeerinfo'] = 'TRUE';
 
 /*
- * If 'showpeerinfo' above is TRUE, and you would like to show BGP peer information to visitors from a specific IPv4 address or subnet, enter the IPv4 address or subnet (in CIDR format) below
+ * If 'showpeerinfo' above is TRUE, and you would like to show BGP peer information to visitors from a specific IPv4 address or subnet, add the IPv4 address or subnet (in CIDR format) to the array below
  */
-$_CONFIG['safesubnet'] = '';
+$_CONFIG['safesubnets'] = array(
+	''
+);
 
 /*
  * SSH authentication type (`password` or `privatekey`)
