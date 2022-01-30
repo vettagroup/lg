@@ -322,15 +322,15 @@ if(isset($_CONFIG['safesubnets']) AND ! empty($_CONFIG['safesubnets']))
 	}
 }
 
+if($ipsafe){
+	echo "Your public IP is " . $_SERVER['REMOTE_ADDR'] . " and is within the safe subnet, permitting display of peer information.<br /><br />";
+}
+
 if (isset($_CONFIG['routers'][$router]) AND 
 	isset($queries[$_CONFIG['routers'][$router]['os']][$protocol]) AND
 	(isset($queries[$_CONFIG['routers'][$router]['os']][$protocol][$command]) OR $command == 'graph'))
 {
-	if($ipsafe)
-	{
-		echo "Your public IP is " . $_SERVER['REMOTE_ADDR'] . " and is within the safe subnet, permitting display of peer information.<br /><br />";
-	}
-	elseif($_CONFIG['showpeerinfo'] == "FALSE" OR $_CONFIG['routers'][$router]['showpeerinfo'] == "FALSE")
+	if(!$ipsafe AND ($_CONFIG['showpeerinfo'] == "FALSE" OR $_CONFIG['routers'][$router]['showpeerinfo'] == "FALSE"))
 	{
 		switch ($command)
 		{
@@ -340,7 +340,7 @@ if (isset($_CONFIG['routers'][$router]) AND
 				exit;
 				break;
 			}
-		}
+		}	
 	}
 	if ($protocol == 'ipv6' AND (!isset($_CONFIG['routers'][$router]['ipv6']) OR 
 		$_CONFIG['routers'][$router]['ipv6'] !== TRUE))
