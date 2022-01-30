@@ -279,6 +279,15 @@ $queries = array
 	),
 );
 
+if(shell_exec('echo lgshellexectest') != 'lgshellexectest'){
+	print '<div class="center"><p class="error">shell_exec not enabled</p></div>';
+	exit;
+}
+if(exec('echo lgshellexectest') != 'lgshellexectest'){
+	print '<div class="center"><p class="error">exec not enabled</p></div>';
+	exit;
+}
+
 if (isset($_CONFIG['routers'][$router]) AND 
 	isset($queries[$_CONFIG['routers'][$router]['os']][$protocol]) AND
 	(isset($queries[$_CONFIG['routers'][$router]['os']][$protocol][$command]) OR $command == 'graph'))
