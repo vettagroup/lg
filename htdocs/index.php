@@ -323,7 +323,15 @@ if(isset($_CONFIG['safesubnets']) AND ! empty($_CONFIG['safesubnets']))
 }
 
 if($ipsafe){
-	echo '<div class="center">Your public IP is ' . $_SERVER['REMOTE_ADDR'] . ' and is within the safe subnet, permitting display of peer information.<br /><br /></div>';
+	if($command == 'graph')
+	{
+		# Don't display
+	}
+	else
+	{
+		echo '<div class="center">Your public IP is ' . $_SERVER['REMOTE_ADDR'] . ' and is within the safe subnet, permitting display of peer information.<br /><br /></div>';
+	}
+	
 }
 
 if (isset($_CONFIG['routers'][$router]) AND 
