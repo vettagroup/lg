@@ -743,7 +743,7 @@ function process($url, $exec, $return_buffer = FALSE)
 
 					if(! empty($instance_list['confederation']))
 					{
-						print 'BGP router identifier '.$instance_list['router-id'].', sub ' . link_as($instance_list['as']) . " within confederation " . link_as($instance_list['confederation']) . "\n";
+						print 'BGP router identifier '.$instance_list['router-id'].', sub ' . link_as($instance_list['as'], true) . " within confederation " . link_as($instance_list['confederation'], true) . "\n";
 					}
 					else
 					{
