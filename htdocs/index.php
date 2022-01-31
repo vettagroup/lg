@@ -2760,10 +2760,10 @@ function get_asinfo($request)
 	}
 
 	list($segments[4], $segments[5]) = explode(' ', $segments[4], 2);
-
-	$segments[5] = str_replace('_', '"', $segments[5]);
 	var_dump($segments[5]);
 	exit;
+	$segments[5] = str_replace('_', '"', $segments[5]);
+	
 	return array
 	(
 		'asn' => $segments[0],
