@@ -740,6 +740,8 @@ function process($url, $exec, $return_buffer = FALSE)
 				if ($instance = @shell_exec('echo n | '.$ssh_path.' '.implode(' ', $params).' /routing bgp instance print'))
 				{
 					$instance_list = parse_list($instance);
+					var_dump($instance_list);
+					exit;
 
 					print 'BGP router identifier '.$instance_list['router-id'].', local AS number '.link_as($instance_list['as'])."\n";
 				}
