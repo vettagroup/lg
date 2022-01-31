@@ -2448,7 +2448,9 @@ function link_community($line)
 function link_as($line, $word = FALSE, $type = null)
 {
 	global $_CONFIG;
-	
+	if(! empty($word)){
+		var_dump($word);
+	}
 	$asurl = "";
 	#$urlasn = intval(substr($as_id, 2));
 	$asn = preg_replace("/(?:AS)?([\d]+)/is", 
