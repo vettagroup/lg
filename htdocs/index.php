@@ -2606,10 +2606,9 @@ function get_path_graph($router, $query, $as_pathes, $as_best_path, $format = 's
 		$asinfo = get_asinfo($as_id);
 
 		$asurl = "";
-		$as_id = substr($as_id, 2);
-		var_dump($as_id);
-		exit;
-		if((intval($as_id) >= 1 AND intval($as_id) <= 23455) OR (intval($as_id) >= 23457 AND intval($as_id) <= 64495) OR (intval($as_id) >= 131072 AND intval($as_id) <= 4199999999)){
+		$urlasn = intval(substr($as_id, 2));
+
+		if(($urlasn >= 1 AND $urlasn <= 23455) OR ($urlasn >= 23457 AND $urlasn <= 64495) OR ($urlasn >= 131072 AND $urlasn <= 4199999999)){
 			$asurl = $_CONFIG['aswhois'] . $as_id;
 		} else {
 			# Not a public AS, don't include URL
