@@ -740,10 +740,15 @@ function process($url, $exec, $return_buffer = FALSE)
 				if ($instance = @shell_exec('echo n | '.$ssh_path.' '.implode(' ', $params).' /routing bgp instance print'))
 				{
 					$instance_list = parse_list($instance);
-					var_dump($instance_list);
-					exit;
 
-					print 'BGP router identifier '.$instance_list['router-id'].', local AS number '.link_as($instance_list['as'])."\n";
+					if(! empty($instance_list['confederation']))
+					{
+						print 'BGP router identifier '.$instance_list['router-id'].', sub AS number ' . link_as($instance_list['as']) . " within confederation AS number " . $instance_list['confederation'] . "\n";
+					}
+					else
+					{
+						print 'BGP router identifier '.$instance_list['router-id'].', local AS number '.link_as($instance_list['as'])."\n";
+					}
 				}
 			}
 
