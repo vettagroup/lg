@@ -2758,9 +2758,17 @@ function get_asinfo($request)
 	{
 		return FALSE;
 	}
-	var_dump(explode(' ', $segments[4], 2));
+	if(strpos(explode(',', $segments[4], 2)[0], " "))
+	{
+		list($segments[4], $segments[5]) = explode(' ', $segments[4], 2);
+	}
+	else
+	{
+		$segments[5] = $segments[4];
+		$segments[4] = explode(',', $segments[4], 2)[0];
+	}
+	var_dump($segments);
 	exit;
-	list($segments[4], $segments[5]) = explode(' ', $segments[4], 2);
 	
 	$segments[5] = str_replace('_', '"', $segments[5]);
 	
