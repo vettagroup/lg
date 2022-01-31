@@ -2453,6 +2453,8 @@ function link_as($line, $word = FALSE, $type = null)
 	#$urlasn = intval(substr($as_id, 2));
 	$asn = preg_replace("/(?:AS)?([\d]+)/is", 
 	"$1", $line);
+	var_dump($asn);
+	exit;
 
 	$url = null;
 	$publicasn = false;
