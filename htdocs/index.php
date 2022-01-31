@@ -2758,10 +2758,10 @@ function get_asinfo($request)
 	{
 		return FALSE;
 	}
-
-	list($segments[4], $segments[5]) = explode(' ', $segments[4], 2);
-	var_dump($segments[5]);
+	var_dump(explode(' ', $segments[4], 2));
 	exit;
+	list($segments[4], $segments[5]) = explode(' ', $segments[4], 2);
+	
 	$segments[5] = str_replace('_', '"', $segments[5]);
 	
 	return array
