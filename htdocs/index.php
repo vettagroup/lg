@@ -622,7 +622,7 @@ else
 ?>
 		<hr>
 		<div class="center">
-			<p><small>Information: <a href="https://stat.ripe.net/AS<?php print $_CONFIG['asn'] ?>" target="_blank">RIPEstat</a> <a href="http://bgp.he.net/AS<?php print $_CONFIG['asn'] ?>" target="_blank">he.net</a> <a href="https://www.robtex.com/as/AS<?php print $_CONFIG['asn'] ?>.html" target="_blank">robtex.com</a> <a href="http://www.peeringdb.com/view.php?asn=<?php print $_CONFIG['asn'] ?>" target="_blank">PeeringDB</a></small></p>
+			<p><small>Information: <a href="https://stat.ripe.net/AS<?php print $_CONFIG['asn'] ?>" target="_blank">RIPEstat</a> <a href="https://www.radb.net/query?keywords=<?php print $_CONFIG['asn'] ?>" target="_blank">RADb</a> <a href="http://bgp.he.net/AS<?php print $_CONFIG['asn'] ?>" target="_blank">he.net</a> <a href="https://www.robtex.com/as/AS<?php print $_CONFIG['asn'] ?>.html" target="_blank">robtex.com</a> <a href="http://www.peeringdb.com/view.php?asn=<?php print $_CONFIG['asn'] ?>" target="_blank">PeeringDB</a></small></p>
 			<p>Copyright &copy; <?php print date('Y') ?> <?php print htmlspecialchars($_CONFIG['company']) ?></p>
 		</div>
 	</body>
