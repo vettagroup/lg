@@ -2454,21 +2454,35 @@ function link_as($line, $word = FALSE, $type = null)
 	$asn = preg_replace("/(?:AS)?([\d]+)/is", 
 	"$1", $line);
 
+	$url = null;
+	$publicasn = false;
+
 	if(($$asn >= 1 AND $$asn <= 23455) OR ($$asn >= 23457 AND $$asn <= 64495) OR ($$asn >= 131072 AND $$asn <= 4199999999)){
+		$publicasn = true;
 		$url = $_CONFIG['aswhois'] . "AS" . $asn;
 	} else {
 		# Not a public AS, don't include URL
 	}
-
 	if(! empty($type))
 	{
 		if($type == "url")
 		{
 			return $url;
 		}
+		elseif($publicasn)
+		{
+			return '<a href="' . $url . '" target="_blank">AS' . $asn . '</a>';
+		}
+		else
+		{
+			return "AS" . $asn;
+		}
 	}
-
-	return '<a href="' . $url . '" target="_blank">AS' . $asn . '</a>';
+	else
+	{
+		return false;
+	}
+	
 }
 
 function get_as($ip, $original_as)
