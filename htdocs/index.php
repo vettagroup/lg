@@ -2606,6 +2606,7 @@ function get_path_graph($router, $query, $as_pathes, $as_best_path, $format = 's
 		$asinfo = get_asinfo($as_id);
 
 		$asurl = "";
+		$as_id = substr($as_id, 2);
 		var_dump($as_id);
 		exit;
 		if((intval($as_id) >= 1 AND intval($as_id) <= 23455) OR (intval($as_id) >= 23457 AND intval($as_id) <= 64495) OR (intval($as_id) >= 131072 AND intval($as_id) <= 4199999999)){
