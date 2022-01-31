@@ -2753,7 +2753,7 @@ function get_asinfo($request)
 
 	$segments = array_map('trim', explode('|', $dns[0]['txt'], 5));
 	#var_dump($segments);
-	exit;
+	
 	if (sizeof($segments) != 5)
 	{
 		return FALSE;
@@ -2763,6 +2763,7 @@ function get_asinfo($request)
 
 	$segments[5] = str_replace('_', '"', $segments[5]);
 	var_dump($segments[5]);
+	exit;
 	return array
 	(
 		'asn' => $segments[0],
