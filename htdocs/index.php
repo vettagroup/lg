@@ -2448,9 +2448,7 @@ function link_community($line)
 function link_as($line, $word = FALSE, $type = null)
 {
 	global $_CONFIG;
-	if(! empty($word)){
-		var_dump($word);
-	}
+
 	$asurl = "";
 	#$urlasn = intval(substr($as_id, 2));
 	$asn = preg_replace("/(?:AS)?([\d]+)/is", 
@@ -2458,28 +2456,30 @@ function link_as($line, $word = FALSE, $type = null)
 
 	$url = null;
 	$publicasn = false;
-
 	if(($asn >= 1 AND $asn <= 23455) OR ($asn >= 23457 AND $asn <= 64495) OR ($asn >= 131072 AND $asn <= 4199999999)){
 		$publicasn = true;
-		$url = $_CONFIG['aswhois'] . "AS" . $asn;
-	} else {
-		# Not a public AS, don't include URL
 	}
-	if($publicasn AND $type == "url")
+	
+	if($word)
 	{
-		return $url;
-	}
-	elseif($publicasn)
-	{
-		return '<a href="' . $url . '" target="_blank">AS' . $asn . '</a>';
-	}
-	elseif($type == "url")
-	{
-		return "";
+		$asnword = "AS" . $asn;
 	}
 	else
 	{
-		return "AS" . $asn;
+		$asnword = $asn;
+	}
+
+	if($publicasn AND $type == "url")
+	{
+		$url = $_CONFIG['aswhois'] . "AS" . $asn;
+	}
+	elseif($publicasn)
+	{
+		return '<a href="' . $url . '" target="_blank">' . $asnword . '</a>';
+	}
+	else
+	{
+		return $asnword;
 	}
 }
 
