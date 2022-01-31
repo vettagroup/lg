@@ -2752,7 +2752,8 @@ function get_asinfo($request)
 	}
 
 	$segments = array_map('trim', explode('|', $dns[0]['txt'], 5));
-
+	var_dump($segments);
+	exit;
 	if (sizeof($segments) != 5)
 	{
 		return FALSE;
