@@ -2449,10 +2449,8 @@ function link_as($line, $word = FALSE, $type = null)
 {
 	global $_CONFIG;
 
-	$asurl = "";
-	#$urlasn = intval(substr($as_id, 2));
-	$asn = preg_replace("/(?:AS)?([\d]+)/is", 
-	"$1", $line);
+	$asn = intval(preg_replace("/(?:AS)?([\d]+)/is", 
+	"$1", $line));
 
 	$url = null;
 	$publicasn = false;
@@ -2471,11 +2469,11 @@ function link_as($line, $word = FALSE, $type = null)
 
 	if($publicasn AND $type == "url")
 	{
-		return $_CONFIG['aswhois'] . "AS" . $asn;
+		return htmlspecialchars($_CONFIG['aswhois']) . "AS" . $asn;
 	}
 	elseif($publicasn)
 	{
-		return '<a href="' . $url . '" target="_blank">' . $asnword . '</a>';
+		return '<a href="' . htmlspecialchars($_CONFIG['aswhois']) . "AS" . $asn . '" target="_blank">' . $asnword . '</a>';
 	}
 	else
 	{
