@@ -743,7 +743,7 @@ function process($url, $exec, $return_buffer = FALSE)
 
 					if(! empty($instance_list['confederation']))
 					{
-						print 'BGP router identifier '.$instance_list['router-id'].', sub AS number ' . link_as($instance_list['as']) . " within confederation AS number " . $instance_list['confederation'] . "\n";
+						print 'BGP router identifier '.$instance_list['router-id'].', sub AS number ' . link_as($instance_list['as']) . " within confederation AS number " . link_as($instance_list['confederation']) . "\n";
 					}
 					else
 					{
@@ -2445,14 +2445,30 @@ function link_community($line)
 /**
  * Link to AS whois
  */
-function link_as($line, $word = FALSE)
+function link_as($line, $word = FALSE, $type = null)
 {
 	global $_CONFIG;
-
-	//print_r($line);
 	
-	return preg_replace("/(?:AS)?([\d]+)/is", 
-		"<a href=\"".htmlspecialchars($_CONFIG['aswhois'])."AS\\1\" target=\"_blank\">".($word ? 'AS' : '')."\\1</a>", $line);
+	$asurl = "";
+	#$urlasn = intval(substr($as_id, 2));
+	$asn = preg_replace("/(?:AS)?([\d]+)/is", 
+	"$1", $line);
+
+	if(($$asn >= 1 AND $$asn <= 23455) OR ($$asn >= 23457 AND $$asn <= 64495) OR ($$asn >= 131072 AND $$asn <= 4199999999)){
+		$url = $_CONFIG['aswhois'] . "AS" . $asn;
+	} else {
+		# Not a public AS, don't include URL
+	}
+
+	if(! empty($type))
+	{
+		if($type == "url")
+		{
+			return $url;
+		}
+	}
+
+	return '<a href="' . $url . '" target="_blank">AS' . $asn . '</a>';
 }
 
 function get_as($ip, $original_as)
@@ -2611,18 +2627,9 @@ function get_path_graph($router, $query, $as_pathes, $as_best_path, $format = 's
 		$color = isset($as_peer_list[$as_id]) ? ($as_peer_list[$as_id] ? '#CCFFCC' : '#CCCCFF') : 'white';
 
 		$asinfo = get_asinfo($as_id);
-
-		$asurl = "";
-		$urlasn = intval(substr($as_id, 2));
-
-		if(($urlasn >= 1 AND $urlasn <= 23455) OR ($urlasn >= 23457 AND $urlasn <= 64495) OR ($urlasn >= 131072 AND $urlasn <= 4199999999)){
-			$asurl = $_CONFIG['aswhois'] . $as_id;
-		} else {
-			# Not a public AS, don't include URL
-		}
 		$graph->addNode($as_id, array
 		(
-			'URL' => $asurl,
+			'URL' => link_as($as_id, false, "url"),
 			'target' => '_blank',
 			'label' => isset($asinfo['description']) ? $as_id."\n".$asinfo['description'] : $as_id,
 			'style' => 'filled', 
