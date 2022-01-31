@@ -2475,6 +2475,10 @@ function link_as($line, $word = FALSE, $type = null)
 	{
 		return '<a href="' . htmlspecialchars($_CONFIG['aswhois']) . "AS" . $asn . '" target="_blank">' . $asnword . '</a>';
 	}
+	elseif($type == "url")
+	{
+		return null;
+	}
 	else
 	{
 		return $asnword;
