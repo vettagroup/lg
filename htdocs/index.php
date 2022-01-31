@@ -2767,8 +2767,6 @@ function get_asinfo($request)
 		$segments[5] = $segments[4];
 		$segments[4] = explode(',', $segments[4], 2)[0];
 	}
-	var_dump($segments);
-	exit;
 	
 	$segments[5] = str_replace('_', '"', $segments[5]);
 	
