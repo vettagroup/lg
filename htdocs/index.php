@@ -2453,8 +2453,6 @@ function link_as($line, $word = FALSE, $type = null)
 	#$urlasn = intval(substr($as_id, 2));
 	$asn = preg_replace("/(?:AS)?([\d]+)/is", 
 	"$1", $line);
-	var_dump($asn);
-	exit;
 
 	$url = null;
 	$publicasn = false;
@@ -2467,13 +2465,17 @@ function link_as($line, $word = FALSE, $type = null)
 	}
 	if(! empty($type))
 	{
-		if($type == "url")
+		if($publicasn AND $type == "url")
 		{
 			return $url;
 		}
 		elseif($publicasn)
 		{
 			return '<a href="' . $url . '" target="_blank">AS' . $asn . '</a>';
+		}
+		elseif($type == "url")
+		{
+			return "";
 		}
 		else
 		{
