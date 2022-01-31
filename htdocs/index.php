@@ -2463,30 +2463,22 @@ function link_as($line, $word = FALSE, $type = null)
 	} else {
 		# Not a public AS, don't include URL
 	}
-	if(! empty($type))
+	if($publicasn AND $type == "url")
 	{
-		if($publicasn AND $type == "url")
-		{
-			return $url;
-		}
-		elseif($publicasn)
-		{
-			return '<a href="' . $url . '" target="_blank">AS' . $asn . '</a>';
-		}
-		elseif($type == "url")
-		{
-			return "";
-		}
-		else
-		{
-			return "AS" . $asn;
-		}
+		return $url;
+	}
+	elseif($publicasn)
+	{
+		return '<a href="' . $url . '" target="_blank">AS' . $asn . '</a>';
+	}
+	elseif($type == "url")
+	{
+		return "";
 	}
 	else
 	{
-		return false;
+		return "AS" . $asn;
 	}
-	
 }
 
 function get_as($ip, $original_as)
