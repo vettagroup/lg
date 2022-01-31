@@ -329,7 +329,7 @@ if($ipsafe){
 	}
 	else
 	{
-		echo '<div class="center">Your public IP is ' . $_SERVER['REMOTE_ADDR'] . ' and is within the safe subnet, permitting display of peer information.<br /><br /></div>';
+		echo '<div class="center">Your public IP is ' . $_SERVER['REMOTE_ADDR'] . ' and is within a safe subnet, therefore permitting display of peer information.<br /><br /></div>';
 	}
 	
 }
