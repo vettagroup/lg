@@ -2459,7 +2459,7 @@ function link_as($line, $word = FALSE, $type = null)
 	if(($asn >= 1 AND $asn <= 23455) OR ($asn >= 23457 AND $asn <= 64495) OR ($asn >= 131072 AND $asn <= 4199999999)){
 		$publicasn = true;
 	}
-	
+
 	if($word)
 	{
 		$asnword = "AS" . $asn;
@@ -2471,7 +2471,7 @@ function link_as($line, $word = FALSE, $type = null)
 
 	if($publicasn AND $type == "url")
 	{
-		$url = $_CONFIG['aswhois'] . "AS" . $asn;
+		return $_CONFIG['aswhois'] . "AS" . $asn;
 	}
 	elseif($publicasn)
 	{
