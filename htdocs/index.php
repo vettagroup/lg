@@ -2605,9 +2605,15 @@ function get_path_graph($router, $query, $as_pathes, $as_best_path, $format = 's
 
 		$asinfo = get_asinfo($as_id);
 
+		$asurl = "";
+		if((intval($as_id) >= 1 AND intval($as_id) <= 23455) OR (intval($as_id) >= 23457 AND intval($as_id) <= 64495) OR (intval($as_id) >= 131072 AND intval($as_id) <= 4199999999)){
+			$asurl = $_CONFIG['aswhois'] . $as_id;
+		} else {
+			# Not a public AS, don't include URL
+		}
 		$graph->addNode($as_id, array
 		(
-			'URL' => $_CONFIG['aswhois'].$as_id,
+			'URL' => $asurl,
 			'target' => '_blank',
 			'label' => isset($asinfo['description']) ? $as_id."\n".$asinfo['description'] : $as_id,
 			'style' => 'filled', 
