@@ -323,7 +323,7 @@ if(isset($_CONFIG['safesubnets']) AND ! empty($_CONFIG['safesubnets']))
 }
 
 if($ipsafe){
-	if($command == 'graph')
+	if($command == 'graph' AND isset($_REQUEST['render']) AND $_REQUEST['render'] == true)
 	{
 		# Don't display
 	}
