@@ -1243,10 +1243,10 @@ function parse_out($output, $check = FALSE)
 			{
 				#$radb = get_radb($exp[1]);
 				$asn = get_as($exp[1], "15835");
-				die(var_dump($asn));
 				$new_exp[1] = get_ptr($exp[1]);
 				$new_exp[2] = '('.$exp[1].')';
-				$new_exp[3] = '['.(isset($radb['origin']) ? 'AS '.link_as($radb['origin']) : '').']';
+				#$new_exp[3] = '['.(isset($radb['origin']) ? 'AS '.link_as($radb['origin']) : '').']';
+				$new_exp[3] = $asn;
 				$new_exp[4] = $exp[5].'ms';
 				$new_exp[5] = $exp[6].'ms';
 				$new_exp[6] = $exp[7].'ms';
