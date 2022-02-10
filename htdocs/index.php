@@ -1221,7 +1221,7 @@ function parse_out($output, $check = FALSE)
 
 			return 'traceroute to '.$query.' ('.get_ptr($query).'), 64 hops max, 60 byte packets'."\n";
 		}
-		die(var_dump($output));
+		
 		if ($index > 0)
 		{
 			$exp = explode(' ', preg_replace('/[\s\t]+/', ' ', trim($output)));
@@ -1233,7 +1233,7 @@ function parse_out($output, $check = FALSE)
 			}
 
 			$new_exp[0] = (strlen($exp[0]) < 2) ? ' '.$exp[0] : $exp[0];
-
+			die(var_dump($exp));
 			if ($exp[3] == 'timeout')
 			{
 				$new_exp[1] = '* * *';
