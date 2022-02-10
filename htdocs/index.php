@@ -560,7 +560,10 @@ if (isset($_CONFIG['routers'][$router]) AND
 		}
 		else
 		{
-			print '<p><b>Router:</b> '.$_CONFIG['routers'][$router]['description'].'<br><b>Command:</b> '.$exec.'test</p><pre><code>';
+			print '<p><b>Router:</b> '.$_CONFIG['routers'][$router]['description'].'<br>';
+			if($ipsafe OR ($_CONFIG['routers'][$router]['showpeerinfo'] == "TRUE" OR ($_CONFIG['showpeerinfo'] == "TRUE" AND !isset($_CONFIG['routers'][$router]['showpeerinfo'])))){
+				print '<b>Command:</b> '.$exec.'</p><pre><code>';
+			}
 			flush();
 
 			process($url, $exec);
