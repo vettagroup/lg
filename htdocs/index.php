@@ -1233,7 +1233,7 @@ function parse_out($output, $check = FALSE)
 			}
 
 			$new_exp[0] = (strlen($exp[0]) < 2) ? ' '.$exp[0] : $exp[0];
-			die(var_dump($exp));
+
 			if ($exp[3] == 'timeout')
 			{
 				$new_exp[1] = '* * *';
@@ -1242,7 +1242,7 @@ function parse_out($output, $check = FALSE)
 			else
 			{
 				$radb = get_radb($exp[1]);
-
+				die(var_dump($radb));
 				$new_exp[1] = get_ptr($exp[1]);
 				$new_exp[2] = '('.$exp[1].')';
 				$new_exp[3] = '['.(isset($radb['origin']) ? 'AS '.link_as($radb['origin']) : '').']';
