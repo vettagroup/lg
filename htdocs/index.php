@@ -1024,7 +1024,7 @@ function parse_out($output, $check = FALSE)
 	global $_CONFIG, $router, $protocol, $os, $command, $exec, $query, $index, $lastip, $best, $count, $str_in, $ros;
 
 	$output = str_replace("\r\n", "\n", $output);
-	die(var_dump($output));
+	
 	// MikroTik
 	if (preg_match("/^\/(ip|ipv6) route print detail/i", $exec) AND $os == 'mikrotik')
 	{
@@ -1215,6 +1215,7 @@ function parse_out($output, $check = FALSE)
 	// MikroTik
 	if (preg_match("/^\/tool trace/i", $exec) AND $os == 'mikrotik' AND $ros >= 6)
 	{
+		die(var_dump($output));
 		if (preg_match('/^ # ADDRESS/', $output) AND $index == 0)
 		{
 			$index++;
