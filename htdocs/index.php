@@ -1241,8 +1241,9 @@ function parse_out($output, $check = FALSE)
 			}
 			else
 			{
-				$radb = get_radb($exp[1]);
-				die(var_dump($radb));
+				#$radb = get_radb($exp[1]);
+				$asn = get_asinfo($exp[1])['asn'];
+				die(var_dump($asn));
 				$new_exp[1] = get_ptr($exp[1]);
 				$new_exp[2] = '('.$exp[1].')';
 				$new_exp[3] = '['.(isset($radb['origin']) ? 'AS '.link_as($radb['origin']) : '').']';
