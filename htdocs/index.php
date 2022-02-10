@@ -1024,7 +1024,7 @@ function parse_out($output, $check = FALSE)
 	global $_CONFIG, $router, $protocol, $os, $command, $exec, $query, $index, $lastip, $best, $count, $str_in, $ros;
 
 	$output = str_replace("\r\n", "\n", $output);
-
+	die(var_dump($output));
 	// MikroTik
 	if (preg_match("/^\/(ip|ipv6) route print detail/i", $exec) AND $os == 'mikrotik')
 	{
@@ -2110,7 +2110,7 @@ function parse_out($output, $check = FALSE)
 
 		return $output;
 	}
-	die(var_dump($exec));
+
 	if (preg_match("/^trace/", $exec))
 	{
 		$output = preg_replace("/\[AS0\]\s(.*)/", "\\1", $output);
