@@ -1215,14 +1215,13 @@ function parse_out($output, $check = FALSE)
 	// MikroTik
 	if (preg_match("/^\/tool trace/i", $exec) AND $os == 'mikrotik' AND $ros >= 6)
 	{
-		die(var_dump($output));
 		if (preg_match('/^ # ADDRESS/', $output) AND $index == 0)
 		{
 			$index++;
 
 			return 'traceroute to '.$query.' ('.get_ptr($query).'), 64 hops max, 60 byte packets'."\n";
 		}
-
+		die(var_dump($output));
 		if ($index > 0)
 		{
 			$exp = explode(' ', preg_replace('/[\s\t]+/', ' ', trim($output)));
