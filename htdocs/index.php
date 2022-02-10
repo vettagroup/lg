@@ -805,7 +805,7 @@ function process($url, $exec, $return_buffer = FALSE)
 						continue;
 					}
 
-					print $line;
+					print $line . "test";
 
 					flush();
 
