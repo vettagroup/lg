@@ -1242,7 +1242,7 @@ function parse_out($output, $check = FALSE)
 			else
 			{
 				#$radb = get_radb($exp[1]);
-				$asn = get_asinfo($exp[1]);
+				$asn = get_as($exp[1], "15835");
 				die(var_dump($asn));
 				$new_exp[1] = get_ptr($exp[1]);
 				$new_exp[2] = '('.$exp[1].')';
