@@ -560,7 +560,7 @@ if (isset($_CONFIG['routers'][$router]) AND
 		}
 		else
 		{
-			print '<p><b>Router:</b> '.$_CONFIG['routers'][$router]['description'].'<br><b>Command:</b> '.$exec.'</p><pre><code>';
+			print '<p><b>Router:</b> '.$_CONFIG['routers'][$router]['description'].'<br><b>Command:</b> '.$exec.'test</p><pre><code>';
 			flush();
 
 			process($url, $exec);
@@ -805,7 +805,7 @@ function process($url, $exec, $return_buffer = FALSE)
 						continue;
 					}
 
-					print $line . "test";
+					print $line;
 
 					flush();
 
