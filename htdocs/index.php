@@ -2114,7 +2114,7 @@ function parse_out($output, $check = FALSE)
 	if (preg_match("/^trace/", $exec))
 	{
 		$output = preg_replace("/\[AS0\]\s(.*)/", "\\1", $output);
-		var_dump($output);
+		die(var_dump($output));
 		// IPv4
 		$output = preg_replace_callback(
 			"/(\[AS)(\d+)(\])\s(.*)(\))(.*)/",
