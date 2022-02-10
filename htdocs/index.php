@@ -563,6 +563,8 @@ if (isset($_CONFIG['routers'][$router]) AND
 			print '<p><b>Router:</b> '.$_CONFIG['routers'][$router]['description'].'<br>';
 			if($ipsafe OR ($_CONFIG['routers'][$router]['showpeerinfo'] == "TRUE" OR ($_CONFIG['showpeerinfo'] == "TRUE" AND !isset($_CONFIG['routers'][$router]['showpeerinfo'])))){
 				print '<b>Command:</b> '.$exec.'</p><pre><code>';
+			} else {
+				print '</p><pre><code>';
 			}
 			flush();
 
