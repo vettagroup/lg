@@ -1057,6 +1057,7 @@ function parse_out($output, $check = FALSE)
 				$aspathmatches = array();
 				$aspathOriginal = $matches[0];
 				$aspathOriginal = str_replace('"', '\"', $aspathOriginal);
+				$summary_part = str_replace($matches[0], $aspathOriginal, $summary_part);
 				$aspath = $aspathOriginal;
 				preg_match_all("/((?:\d+)+)/", $aspath, $matches);
 				$asns = null;
