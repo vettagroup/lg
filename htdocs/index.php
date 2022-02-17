@@ -2458,7 +2458,7 @@ function link_community($line)
 function link_as($line, $word = FALSE, $type = null)
 {
 	global $_CONFIG;
-die(var_dump($line));
+
 	$asn = intval(preg_replace("/(?:AS)?([\d]+)/is", 
 	"$1", $line));
 
