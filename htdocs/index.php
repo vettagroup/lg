@@ -1075,7 +1075,7 @@ function parse_out($output, $check = FALSE)
 						var_dump($aspathOriginal);
 						var_dump($aspath);
 						var_dump($summary_part);
-						$summary_part = str_replace('"' . $aspathOriginal . '"', '\"' . $aspath . '\"', $summary_part);
+						$summary_part = str_replace($aspathOriginal, $aspath, $summary_part);
 						var_dump($summary_part);
 						exit;
 					}
