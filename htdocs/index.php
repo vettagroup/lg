@@ -1073,8 +1073,6 @@ function parse_out($output, $check = FALSE)
 					if(!empty($aspathmatches)){
 						$aspath = str_replace(array_keys($aspathmatches), array_values($aspathmatches), $aspath);
 						$summary_part = str_replace($aspathOriginal, stripslashes($aspath), $summary_part);
-						var_dump($summary_part);
-						exit;
 					}
 				}
 			}
