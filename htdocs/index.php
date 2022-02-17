@@ -1052,13 +1052,13 @@ function parse_out($output, $check = FALSE)
 				$summary_part = preg_replace("/\svia\s\s?\S+/x", "", $summary_part);
 			}
 
-			#$summary_part = preg_replace_callback(
-			#	"/bgp-as-path=\"([^\"]+)\"/x",
-			#	function ($matches) {
-			#		return stripslashes('bgp-as-path=\"'.link_as($matches[1]).'\"');
-			#	},
-			#	$summary_part
-			#);
+			$summary_part = preg_replace_callback(
+				"/bgp-as-path=\"([^\"]+)\"/x",
+				function ($matches) {
+					return stripslashes('bgp-as-path=\"'.link_as($matches[1]).'\"');
+				},
+				$summary_part
+			);
 
 			if (strpos($data_exp[1], 'A') !== FALSE)
 			{
@@ -2458,7 +2458,7 @@ function link_community($line)
 function link_as($line, $word = FALSE, $type = null)
 {
 	global $_CONFIG;
-
+die(var_dump($line));
 	$asn = intval(preg_replace("/(?:AS)?([\d]+)/is", 
 	"$1", $line));
 
