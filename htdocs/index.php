@@ -1052,10 +1052,11 @@ function parse_out($output, $check = FALSE)
 				$summary_part = preg_replace("/\svia\s\s?\S+/x", "", $summary_part);
 			}
 			$matches = null;
-			preg_match('/bgp-as-path\=\"([^\"]+)/', $summary_part, $matches);
+			preg_match('/bgp-as-path\=\"([^\"]+)\"/', $summary_part, $matches);
 			if(! empty($matches[1])){
 				$summary_part_asmatches = array();
-				$aspath = $matches[0];
+				$aspathOriginal = $matches[0];
+				$aspath = $aspathOriginal;
 				preg_match_all("/((?:\d+)+)/", $aspath, $matches);
 				$asns = null;
 				$asns = $matches[1];
@@ -1063,14 +1064,15 @@ function parse_out($output, $check = FALSE)
 				if(! empty($asns)){
 					foreach($matches[1] as $m){
 						if(empty($summary_part_asmatches[$m])){
-							$summary_part_asmatches[$m] = link_as($m);
+							$aspathmatches[$m] = link_as($m);
 						}
 					}
 					
-					if(!empty($summary_part_asmatches)){
-						foreach($summary_part_asmatches as $m){
-							$summary_part = stripslashes(str_replace(array_keys($summary_part_asmatches), array_values($summary_part_asmatches), $summary_part));
+					if(!empty($aspathmatches)){
+						foreach($aspathmatches as $m){
+							$aspath = stripslashes(str_replace(array_keys($aspathmatches), array_values($aspathmatches), $summary_part));
 						}
+						str_replace($aspathOriginal, $aspath, $summary_part);
 					}
 				}
 			}
