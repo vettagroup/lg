@@ -1056,6 +1056,7 @@ function parse_out($output, $check = FALSE)
 			if(! empty($matches[1])){
 				$aspathmatches = array();
 				$aspathOriginal = $matches[0];
+				$aspathOriginal = str_replace('"', '\"', $aspathOriginal);
 				$aspath = $aspathOriginal;
 				preg_match_all("/((?:\d+)+)/", $aspath, $matches);
 				$asns = null;
@@ -1071,8 +1072,6 @@ function parse_out($output, $check = FALSE)
 						foreach($aspathmatches as $m){
 							$aspath = stripslashes(str_replace(array_keys($aspathmatches), array_values($aspathmatches), $aspath));
 						}
-						$aspathOriginal = str_replace('"', '\"', $aspathOriginal);
-						$aspath = str_replace('"', '\"', $aspath);
 						var_dump($aspathOriginal);
 						var_dump($aspath);
 						var_dump($summary_part);
