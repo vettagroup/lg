@@ -1059,7 +1059,10 @@ function parse_out($output, $check = FALSE)
 				$aspathOriginal = str_replace('"', '\"', $aspathOriginal);
 				$summary_part = str_replace($matches[0], $aspathOriginal, $summary_part);
 				$aspath = $aspathOriginal;
+				var_dump($aspath);
 				preg_match_all("/((?:\d+)+)/", $aspath, $matches);
+				var_dump($matches);
+				exit;
 				$asns = null;
 				$asns = $matches[1];
 				$matchCount = 0;
