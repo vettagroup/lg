@@ -810,7 +810,7 @@ function process($url, $exec, $return_buffer = FALSE)
 						continue;
 					}
 
-					print $line . "hi";
+					print $line;
 
 					flush();
 
@@ -1055,7 +1055,7 @@ function parse_out($output, $check = FALSE)
 				},
 				$summary_part
 			);
-
+			$summary_part = $summary_part . "test1";
 			if (strpos($data_exp[1], 'A') !== FALSE)
 			{
 				$output .= '<span style="color:#ff0000">'.$summary_part."</span>\n\n";
