@@ -1058,8 +1058,7 @@ function parse_out($output, $check = FALSE)
 			$aspath = $matches[0];
 			preg_match_all("/((?:\d+)+)/", $aspath, $matches);
 			$matchCount = 0;
-			die(var_dump($matches));
-			foreach($matches as $m){
+			foreach($matches[0] as $m){
 				if($matchCount == 0){
 					continue;
 				} else {
