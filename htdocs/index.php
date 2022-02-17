@@ -1048,8 +1048,10 @@ function parse_out($output, $check = FALSE)
 		{
 			$data_exp = explode(' ', trim($summary_part), 3);
 
-			$summary_part = preg_replace("/\svia\s\s?\S+/x", "", $summary_part);
-
+			if(! $ipsafe){
+				$summary_part = preg_replace("/\svia\s\s?\S+/x", "", $summary_part);
+			}
+			
 			$summary_part = preg_replace_callback(
 				"/bgp-as-path=\"([^\"]+)\"/x",
 				function ($matches) {
