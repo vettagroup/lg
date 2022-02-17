@@ -1071,7 +1071,14 @@ function parse_out($output, $check = FALSE)
 						foreach($aspathmatches as $m){
 							$aspath = stripslashes(str_replace(array_keys($aspathmatches), array_values($aspathmatches), $aspath));
 						}
+						$aspathOriginal = '"' . $aspathOriginal . '"';
+						$aspath = '\"' . $aspath . '\"';
+						var_dump($aspathOriginal);
+						var_dump($aspath);
+						var_dump($summary_part);
 						$summary_part = str_replace('"' . $aspathOriginal . '"', '\"' . $aspath . '\"', $summary_part);
+						var_dump($summary_part);
+						exit;
 					}
 				}
 			}
