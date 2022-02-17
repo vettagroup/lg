@@ -1067,15 +1067,15 @@ function parse_out($output, $check = FALSE)
 							$aspathmatches[$m] = link_as($m);
 						}
 					}
-					
 					if(!empty($aspathmatches)){
 						foreach($aspathmatches as $m){
 							$aspath = stripslashes(str_replace(array_keys($aspathmatches), array_values($aspathmatches), $aspath));
 						}
-						$summary_part = str_replace($aspathOriginal, $aspath, $summary_part);
+						$summary_part = str_replace('"' . $aspathOriginal . '"', '\"' . $aspath . '\"', $summary_part);
 					}
 				}
 			}
+
 
 			if (strpos($data_exp[1], 'A') !== FALSE)
 			{
