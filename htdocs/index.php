@@ -1065,7 +1065,6 @@ function parse_out($output, $check = FALSE)
 				$matchCount = 0;
 				if(! empty($asns)){
 					foreach($matches[1] as $m){
-						var_dump($aspathmatches);
 						if(empty($aspathmatches[$m])){
 							$aspathmatches[$m] = link_as($m);
 						}
