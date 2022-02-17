@@ -1055,9 +1055,8 @@ function parse_out($output, $check = FALSE)
 			$summary_part_asmatches = array();
 
 			preg_match('/bgp-as-path\=\"([^\"]+)/', $summary_part, $matches);
-			$aspath = $matches[1];
+			$aspath = $matches[0];
 			preg_match_all("/((?:\d+)+)/", $aspath, $matches);
-			die(var_dump($matches));
 			$matchCount = 0;
 			foreach($matches as $m){
 				if($matchCount == 0){
