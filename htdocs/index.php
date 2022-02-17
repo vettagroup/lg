@@ -1021,7 +1021,7 @@ function process($url, $exec, $return_buffer = FALSE)
  */
 function parse_out($output, $check = FALSE)
 {
-	global $_CONFIG, $router, $protocol, $os, $command, $exec, $query, $index, $lastip, $best, $count, $str_in, $ros;
+	global $_CONFIG, $router, $protocol, $os, $command, $exec, $query, $index, $lastip, $best, $count, $str_in, $ros, $ipsafe;
 
 	$output = str_replace("\r\n", "\n", $output);
 
@@ -1049,7 +1049,7 @@ function parse_out($output, $check = FALSE)
 			$data_exp = explode(' ', trim($summary_part), 3);
 
 			if(!$ipsafe){
-				#$summary_part = preg_replace("/\svia\s\s?\S+/x", "", $summary_part);
+				$summary_part = preg_replace("/\svia\s\s?\S+/x", "", $summary_part);
 			}
 
 			$summary_part = preg_replace_callback(
