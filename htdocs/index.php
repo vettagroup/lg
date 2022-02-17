@@ -1070,6 +1070,7 @@ function parse_out($output, $check = FALSE)
 						}
 					}
 					if(!empty($aspathmatches)){
+						var_dump($aspathmatches);
 						$aspath = str_replace(array_keys($aspathmatches), array_values($aspathmatches), $aspath);
 						var_dump($aspath);
 						exit;
