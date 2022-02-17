@@ -1072,24 +1072,6 @@ function parse_out($output, $check = FALSE)
 				}
 			}
 
-			$summary_part = preg_replace_callback(
-				"/\(?(?:AS)?([\d]+)\)?/g",
-				function ($matches) {
-					
-					$aspath = "";
-					foreach($matches as $m){
-						if($matchCount == 0){
-							continue;
-						} else {
-							return link_as($m);
-						}
-					}
-					die(var_dump($aspath));
-					return stripslashes('bgp-as-path=\"'.link_as($matches[1]).'\"');
-				},
-				$summary_part
-			);
-
 			if (strpos($data_exp[1], 'A') !== FALSE)
 			{
 				$output .= '<span style="color:#ff0000">'.$summary_part."</span>\n\n";
