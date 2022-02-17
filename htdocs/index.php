@@ -1070,9 +1070,9 @@ function parse_out($output, $check = FALSE)
 					
 					if(!empty($aspathmatches)){
 						foreach($aspathmatches as $m){
-							$aspath = stripslashes(str_replace(array_keys($aspathmatches), array_values($aspathmatches), $summary_part));
+							$aspath = stripslashes(str_replace(array_keys($aspathmatches), array_values($aspathmatches), $aspath));
 						}
-						str_replace($aspathOriginal, $aspath, $summary_part);
+						$summary_part = str_replace($aspathOriginal, $aspath, $summary_part);
 					}
 				}
 			}
