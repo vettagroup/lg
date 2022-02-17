@@ -1052,9 +1052,39 @@ function parse_out($output, $check = FALSE)
 				$summary_part = preg_replace("/\svia\s\s?\S+/x", "", $summary_part);
 			}
 
+			$summary_part_asmatches = array();
+
+			preg_match("/\(?(?:AS)?([\d]+)\)?/g", $summary_part, $matches);
+
+			$matchCount = 0;
+			foreach($matches as $m){
+				if($matchCount == 0){
+					continue;
+				} else {
+					if(empty($summary_part_asmatches[$m])){
+						$summary_part_asmatches[$m] = link_as($m);
+					}
+				}
+			}
+			if(!empty($summary_part_asmatches)){
+				foreach($summary_part_asmatches as $m){
+					$summary_part = str_replace(array_keys($summary_part_asmatches), array_values($summary_part_asmatches), $summary_part);
+				}
+			}
+
 			$summary_part = preg_replace_callback(
-				"/bgp-as-path=\"([^\"]+)\"/x",
+				"/\(?(?:AS)?([\d]+)\)?/g",
 				function ($matches) {
+					
+					$aspath = "";
+					foreach($matches as $m){
+						if($matchCount == 0){
+							continue;
+						} else {
+							return link_as($m);
+						}
+					}
+					die(var_dump($aspath));
 					return stripslashes('bgp-as-path=\"'.link_as($matches[1]).'\"');
 				},
 				$summary_part
