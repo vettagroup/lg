@@ -1064,10 +1064,17 @@ function parse_out($output, $check = FALSE)
 				$matchCount = 0;
 				if(! empty($asns)){
 					foreach($matches[1] as $m){
+						echo "start";
+						var_dump($aspathmatches);
 						if(empty($aspathmatches[$m])){
+							echo "adding";
 							$aspathmatches[$m] = link_as($m);
+							var_dump($aspathmatches);
 						}
 					}
+					echo "after";
+					var_dump($aspathmatches);
+					exit;
 					if(!empty($aspathmatches)){
 						foreach($aspathmatches as $m){
 							$aspath = stripslashes(str_replace(array_keys($aspathmatches), array_values($aspathmatches), $aspath));
