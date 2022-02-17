@@ -1060,7 +1060,6 @@ function parse_out($output, $check = FALSE)
 				$matchCount = 0;
 				foreach($matches[0] as $m){
 					if(empty($summary_part_asmatches[$m])){
-						die(var_dump(link_as($m)));
 						$summary_part_asmatches[$m] = link_as($m);
 					}
 				}
