@@ -1067,17 +1067,14 @@ function parse_out($output, $check = FALSE)
 					foreach($matches[1] as $m){
 						var_dump($aspathmatches);
 						if(empty($aspathmatches[$m])){
-							echo "adding";
 							$aspathmatches[$m] = link_as($m);
-							var_dump($aspathmatches);
 						}
 					}
 					if(!empty($aspathmatches)){
-						var_dump($aspathmatches);
 						$aspath = str_replace(array_keys($aspathmatches), array_values($aspathmatches), $aspath);
-						var_dump($aspath);
-						exit;
 						$summary_part = str_replace($aspathOriginal, stripslashes($aspath), $summary_part);
+						var_dump($summary_part);
+						exit;
 					}
 				}
 			}
