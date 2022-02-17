@@ -1051,21 +1051,25 @@ function parse_out($output, $check = FALSE)
 			if(!$ipsafe){
 				$summary_part = preg_replace("/\svia\s\s?\S+/x", "", $summary_part);
 			}
-
+			$matches = null;
 			preg_match('/bgp-as-path\=\"([^\"]+)/', $summary_part, $matches);
-			if(! empty($matches[0])){
+			if(! empty($matches[1])){
 				$summary_part_asmatches = array();
 				$aspath = $matches[0];
 				preg_match_all("/((?:\d+)+)/", $aspath, $matches);
+				$asns = null;
+				$asns = $matches[1];
 				$matchCount = 0;
-				foreach($matches[0] as $m){
-					if(empty($summary_part_asmatches[$m])){
-						$summary_part_asmatches[$m] = link_as($m);
+				if(! empty($asns)){
+					foreach($matches[1] as $m){
+						if(empty($summary_part_asmatches[$m])){
+							$summary_part_asmatches[$m] = link_as($m);
+						}
 					}
-				}
-				if(!empty($summary_part_asmatches)){
-					foreach($summary_part_asmatches as $m){
-						$summary_part = str_replace(array_keys($summary_part_asmatches), array_values($summary_part_asmatches), $summary_part);
+					if(!empty($summary_part_asmatches)){
+						foreach($summary_part_asmatches as $m){
+							$summary_part = str_replace(array_keys($summary_part_asmatches), array_values($summary_part_asmatches), $summary_part);
+						}
 					}
 				}
 			}
