@@ -1048,6 +1048,8 @@ function parse_out($output, $check = FALSE)
 		{
 			$data_exp = explode(' ', trim($summary_part), 3);
 
+			$summary_part = preg_replace("/\svia\s\s?.*$/x", "", $summary_part);
+
 			$summary_part = preg_replace_callback(
 				"/bgp-as-path=\"([^\"]+)\"/x",
 				function ($matches) {
@@ -1055,7 +1057,7 @@ function parse_out($output, $check = FALSE)
 				},
 				$summary_part
 			);
-			$summary_part = $summary_part . "test1";
+
 			if (strpos($data_exp[1], 'A') !== FALSE)
 			{
 				$output .= '<span style="color:#ff0000">'.$summary_part."</span>\n\n";
