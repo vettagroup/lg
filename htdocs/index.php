@@ -1069,7 +1069,7 @@ function parse_out($output, $check = FALSE)
 					
 					if(!empty($summary_part_asmatches)){
 						foreach($summary_part_asmatches as $m){
-							$summary_part = str_replace(array_keys($summary_part_asmatches), array_values($summary_part_asmatches), $summary_part);
+							$summary_part = stripslashes(str_replace(array_keys($summary_part_asmatches), array_values($summary_part_asmatches), $summary_part));
 							die(var_dump($summary_part));
 						}
 					}
