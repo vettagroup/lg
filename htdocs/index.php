@@ -1071,7 +1071,7 @@ function parse_out($output, $check = FALSE)
 					}
 					if(!empty($aspathmatches)){
 						$aspath = str_replace(array_keys($aspathmatches), array_values($aspathmatches), $aspath);
-						$summary_part = str_replace($aspathOriginal, $aspath, $summary_part);
+						$summary_part = str_replace(stripslashes($aspathOriginal), stripslashes($aspath), $summary_part);
 					}
 				}
 			}
