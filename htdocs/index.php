@@ -1070,18 +1070,11 @@ function parse_out($output, $check = FALSE)
 						}
 					}
 					if(!empty($aspathmatches)){
-						var_dump($aspathmatches);
 						$aspath = str_replace(array_keys($aspathmatches), array_values($aspathmatches), $aspath);
-						var_dump($aspathOriginal);
-						var_dump($aspath);
-						var_dump($summary_part);
 						$summary_part = str_replace($aspathOriginal, $aspath, $summary_part);
-						var_dump($summary_part);
-						exit;
 					}
 				}
 			}
-
 
 			if (strpos($data_exp[1], 'A') !== FALSE)
 			{
