@@ -1059,13 +1059,9 @@ function parse_out($output, $check = FALSE)
 			preg_match_all("/((?:\d+)+)/", $aspath, $matches);
 			$matchCount = 0;
 			foreach($matches[0] as $m){
-				if($matchCount == 0){
-					continue;
-				} else {
-					if(empty($summary_part_asmatches[$m])){
-						die(var_dump(link_as($m)));
-						$summary_part_asmatches[$m] = link_as($m);
-					}
+				if(empty($summary_part_asmatches[$m])){
+					die(var_dump(link_as($m)));
+					$summary_part_asmatches[$m] = link_as($m);
 				}
 			}
 			if(!empty($summary_part_asmatches)){
