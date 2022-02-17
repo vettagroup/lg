@@ -1055,7 +1055,7 @@ function parse_out($output, $check = FALSE)
 			$summary_part_asmatches = array();
 
 			preg_match("/\(?(?:AS)?([\d]+)\)?/", $summary_part, $matches);
-
+			die(var_dump($matches));
 			$matchCount = 0;
 			foreach($matches as $m){
 				if($matchCount == 0){
