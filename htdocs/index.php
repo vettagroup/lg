@@ -90,6 +90,22 @@ $command = isset($_REQUEST['command']) ? trim($_REQUEST['command']) : FALSE;
 $query = isset($_REQUEST['query']) ? trim($_REQUEST['query']) : FALSE;
 $token = isset($_REQUEST['token']) ? trim($_REQUEST['token']) : FALSE;
 
+# Check if client IP is within safe subnets
+
+$ipsafe = false;
+if(isset($_CONFIG['safesubnets']) AND ! empty($_CONFIG['safesubnets']))
+{
+	foreach($_CONFIG['safesubnets'] as $safesubnet)
+	{
+		if(! empty($safesubnet))
+		{
+			if(checkIP($_SERVER['REMOTE_ADDR'], $safesubnet))
+			{
+				$ipsafe = true;
+			}
+		}
+	}
+}
 
 if ($command != 'graph' OR !isset($_REQUEST['render']) OR !isset($_CONFIG['routers'][$router]))
 {
@@ -136,7 +152,7 @@ if ($command != 'graph' OR !isset($_REQUEST['render']) OR !isset($_CONFIG['route
 			}
 		//-->
 		</script>
-<?php if ($_CONFIG['recaptchaEnabled']): ?>
+<?php if (!$ipsafe AND $_CONFIG['recaptchaEnabled']): ?>
 			<script src="<?php print $_CONFIG['recaptchaFrontendURL'] . $_CONFIG['recaptchaSiteKey']?>"></script>
 				<script>
 			function captcha(event, command, protocol, router, query ) {
@@ -238,6 +254,7 @@ $queries = array
 		'ipv4' => array
 		(
 			'bgp' => 'show bgp %s',
+			'bgp-within' => 'show bgp %s',
 			'advertised-routes' => 'show route advertising-protocol bgp %s',
 			'routes'	=> 'show route receive-protocol bgp %s active-path',
 			'summary' => 'show bgp summary',
@@ -247,6 +264,7 @@ $queries = array
 		'ipv6' => array
 		(
 			'bgp' => 'show bgp %s',
+			'bgp-within' => 'show bgp %s',
 			'advertised-routes' => 'show route advertising-protocol bgp %s',
 			'routes'	=> 'show route receive-protocol bgp %s active-path',
 			'summary' => 'show bgp summary',
@@ -328,23 +346,6 @@ if($popentest != "lgpopentest")
 	exit;
 }
 
-# Check if client IP is within safe subnets
-
-$ipsafe = false;
-if(isset($_CONFIG['safesubnets']) AND ! empty($_CONFIG['safesubnets']))
-{
-	foreach($_CONFIG['safesubnets'] as $safesubnet)
-	{
-		if(! empty($safesubnet))
-		{
-			if(checkIP($_SERVER['REMOTE_ADDR'], $safesubnet))
-			{
-				$ipsafe = true;
-			}
-		}
-	}
-}
-
 if($ipsafe){
 	if($command == 'graph' AND isset($_REQUEST['render']) AND $_REQUEST['render'] == true)
 	{
@@ -393,7 +394,7 @@ if (isset($_CONFIG['routers'][$router]) AND
 
 	$url = @parse_url($url);
 
-	$routing_instance = isset($_CONFIG['routers']) AND isset($_CONFIG['routers'][$router]) AND isset($_CONFIG['routers'][$router]['routing-instance']) ? $_CONFIG['routers'][$router]['routing-instance'] : null;
+	$routing_instance = $_CONFIG['routers'][$router]['routing-instance'];
 
 	$os = $_CONFIG['routers'][$router]['os'];
 
@@ -675,7 +676,7 @@ else
 <?php endforeach ?>
 				</select></td></tr>
 				<tr><td align="center" colspan="3"><p><input type="submit" name="submit"
-<?php if ($_CONFIG['recaptchaEnabled']): ?>
+<?php if (!$ipsafe AND $_CONFIG['recaptchaEnabled']): ?>
 					onclick="captcha(event, document.theForm.command.value, document.theForm.protocol.value, document.theForm.router.value, document.theForm.query.value)"
 <?php endif ?>   
 					> | <input type="reset" value="Reset"></p></td></tr>
@@ -704,7 +705,7 @@ else
  */
 function process($url, $exec, $return_buffer = FALSE)
 {
-	global $_SERVER, $_CONFIG, $router, $protocol, $os, $command, $query, $ros, $token;
+	global $_SERVER, $_CONFIG, $router, $protocol, $os, $command, $query, $ros, $token, $ipsafe;
 
     $sshauthtype = null;
 	$buffer = '';
@@ -715,7 +716,7 @@ function process($url, $exec, $return_buffer = FALSE)
 	$urlProtocol = isset($_SERVER['HTTPS']) && !empty($_SERVER['HTTPS']) ? 'https' : 'http';
 	$curlUrl = $urlProtocol . "://" . $_SERVER['SERVER_NAME'] . "/backend.php";
 
-	if($_CONFIG['recaptchaEnabled'] === true) {
+	if(!$ipsafe AND $_CONFIG['recaptchaEnabled'] === true) {
 		$result = verifyToken($curlUrl, $token);
 		if($result == false) {
 			echo "<script>window.location.href='/forbidden.php'</script>";
@@ -1170,33 +1171,13 @@ function parse_out($output, $check = FALSE)
 		{
 			$data_exp = explode(' ', trim($summary_part), 3);
 
-			if(!$ipsafe){
-				$summary_part = preg_replace("/\svia\s\s?\S+/x", "", $summary_part);
-			}
-			$matches = null;
-			preg_match('/bgp-as-path\=\"([^\"]+)\"/', $summary_part, $matches);
-			if(! empty($matches[1])){
-				$aspathmatches = array();
-				$aspathOriginal = $matches[0];
-				$aspathOriginal = str_replace('"', '\"', $aspathOriginal);
-				$summary_part = str_replace($matches[0], $aspathOriginal, $summary_part);
-				$aspath = $aspathOriginal;
-				preg_match_all("/((?:\d+)+)/", $aspath, $matches);
-				$asns = null;
-				$asns = $matches[1];
-				$matchCount = 0;
-				if(! empty($asns)){
-					foreach($matches[1] as $m){
-						if(empty($aspathmatches[$m])){
-							$aspathmatches[$m] = link_as($m);
-						}
-					}
-					if(!empty($aspathmatches)){
-						$aspath = str_replace(array_keys($aspathmatches), array_values($aspathmatches), $aspath);
-						$summary_part = str_replace($aspathOriginal, stripslashes($aspath), $summary_part);
-					}
-				}
-			}
+			$summary_part = preg_replace_callback(
+				"/bgp-as-path=\"([^\"]+)\"/x",
+				function ($matches) {
+				    return stripslashes('bgp-as-path=\"'.link_as($matches[1]).'\"');
+				},
+			$summary_part
+			);
 
 			if (strpos($data_exp[1], 'A') !== FALSE)
 			{
@@ -1383,12 +1364,12 @@ function parse_out($output, $check = FALSE)
 			}
 			else
 			{
-				#$radb = get_radb($exp[1]);
-				$asn = get_as($exp[1], "15835");
+				$radb = get_radb($exp[1]);
+				
 				$new_exp[1] = get_ptr($exp[1]);
 				$new_exp[2] = '('.$exp[1].')';
-				#$new_exp[3] = '['.(isset($radb['origin']) ? 'AS '.link_as($radb['origin']) : '').']';
-				$new_exp[3] = $asn;
+				$new_exp[3] = '['.(isset($radb['origin']) ? 'AS '.link_as($radb['origin']) : '').']';
+				
 				$new_exp[4] = $exp[5].'ms';
 				$new_exp[5] = $exp[6].'ms';
 				$new_exp[6] = $exp[7].'ms';
@@ -2597,40 +2578,9 @@ function link_as($line, $word = FALSE, $type = null)
 {
 	global $_CONFIG;
 
-	$asn = intval(preg_replace("/(?:AS)?([\d]+)/is", 
-	"$1", $line));
+    return preg_replace("/(?:AS)?([\d]+)/is", 
+	"<a href=\"".htmlspecialchars($_CONFIG['aswhois'])."AS\\1\" target=\"_blank\">".($word ? 'AS' : '')."\\1</a>", $line);
 
-	$url = null;
-	$publicasn = false;
-	if(($asn >= 1 AND $asn <= 23455) OR ($asn >= 23457 AND $asn <= 64495) OR ($asn >= 131072 AND $asn <= 4199999999)){
-		$publicasn = true;
-	}
-
-	if($word)
-	{
-		$asnword = "AS" . $asn;
-	}
-	else
-	{
-		$asnword = $asn;
-	}
-
-	if($publicasn AND $type == "url")
-	{
-		return htmlspecialchars($_CONFIG['aswhois']) . "AS" . $asn;
-	}
-	elseif($publicasn)
-	{
-		return '<a href="' . htmlspecialchars($_CONFIG['aswhois']) . "AS" . $asn . '" target="_blank">' . $asnword . '</a>';
-	}
-	elseif($type == "url")
-	{
-		return null;
-	}
-	else
-	{
-		return $asnword;
-	}
 }
 
 function get_as($ip, $original_as)
