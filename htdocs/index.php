@@ -3040,29 +3040,33 @@ function group_routers($array)
 	return $return;
 }
 
-function checkIP($ip, $cidr)
-{
-	if (strpos($cidr, "/") !== false)
-	{
-		list($net, $mask) = explode("/", $cidr);
-   
-		$ip_net = ip2long ($net);
-		$ip_mask = ~((1 << (32 - $mask)) - 1);
-
-		$ip_ip = ip2long ($ip);
-
-		$ip_ip_net = $ip_ip & $ip_mask;
-
-		return ($ip_ip_net == $ip_net);
-	}
-	elseif (filter_var(trim($cidr), FILTER_VALIDATE_IP) == true AND $ip === $cidr)
-	{
-		return true;
-	}
-	else
-	{
-		return false;
-	}
+function checkIP($ip, $cidr) {
+    if (strpos($cidr, '/') !== false) {
+        list($net, $mask) = explode('/', $cidr);
+        
+        if (filter_var($net, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
+            $ip_net = ip2long($net);
+            $ip_mask = ~((1 << (32 - $mask)) - 1);
+            $ip_ip = ip2long($ip);
+            
+            return ($ip_ip & $ip_mask) == ($ip_net & $ip_mask);
+        } elseif (filter_var($net, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
+            $net_bin = inet_pton($net);
+            $ip_bin = inet_pton($ip);
+            
+            if ($net_bin === false || $ip_bin === false) {
+                return false;
+            }
+            
+            $mask_bin = str_repeat("f", $mask >> 3) . substr("0123456789abcdef", ($mask & 7) * 2, 2) . str_repeat("0", 32 - ($mask >> 3) - 1);
+            $mask_bin = pack("H*", $mask_bin);
+            
+            return ($ip_bin & $mask_bin) === ($net_bin & $mask_bin);
+        }
+    } elseif (filter_var(trim($cidr), FILTER_VALIDATE_IP) && $ip === $cidr) {
+        return true;
+    }
+    return false;
 }
 
 // ------------------------------------------------------------------------
